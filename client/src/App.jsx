@@ -9,6 +9,10 @@ import HackothonPage from "./pages/HackathonPage";
 import About from "./pages/About";
 import AdminDashboard from "./pages/AdminDashboard";
 import ScholarshipPage from "./pages/ScholarshipPage ";
+import TechEventPage from "./pages/TechEventPage";
+import CodingContestPage from "./components/ExporePageComponent/CodingContestPage";
+import BlogDetails from "./components/blogPageComponent/BlogDetails";
+import CreateBlog from "./components/blogPageComponent/CreateBlog";
 function App() {
   return (
     <>
@@ -19,7 +23,11 @@ function App() {
          <Route path="/explore/internships" element={<InternshipPage/>} />
          <Route path="/explore/hackatons" element={<HackothonPage/>} />
          <Route path="/explore/scholarship" element={<ScholarshipPage/>} />
+         <Route path="/explore/tech-events" element={<TechEventPage/>} />
+         <Route path="/explore/coding-contest" element={<CodingContestPage/>} />
          <Route path="/blog" element = {<Blog/> }/>
+         <Route path="/blog/details" element = {<BlogDetails/> }/>
+         <Route path="/blog/create" element = {<CreateBlog/> }/>
          <Route path="/about" element = {<About/> }/>
          <Route path="/admin/profile" element = {<AdminDashboard/> }/>
     </Routes>

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IoNotifications } from "react-icons/io5";
-import RoleToggle from "../ExporePageComponent/RoleToggle";
 import UserMenu from "./UserMenu";
-const NavbarMain = ({ onLoginCLose, onAdminClose }) => {
+const NavbarMain = ({ onLoginCLose }) => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Explore", path: "/explore" },
@@ -30,7 +29,7 @@ const NavbarMain = ({ onLoginCLose, onAdminClose }) => {
         if (userInfoStr) {
           try {
             const userObj = JSON.parse(userInfoStr);
-            console.log(userObj); 
+            console.log(userObj);
             setUserProfile(userObj);
           } catch (err) {
             console.error("Error parsing user info from localStorage", err);
@@ -100,14 +99,19 @@ const NavbarMain = ({ onLoginCLose, onAdminClose }) => {
           >
             <img src="profileIcon.png" alt="profile" />
             <UserMenu
-              userProfile = {userProfile}
+              userProfile={userProfile}
               handleLogout={handleLogout}
               isOpen={isPopupOpen}
               onClose={() => setIsPopupOpen(false)}
             />
           </div>
         ) : (
-          <RoleToggle onLoginCLose={onLoginCLose} onAdminClose={onAdminClose} />
+          <button
+            onClick={onLoginCLose}
+            className="px-6 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-lg shadow-md hover:from-blue-600 hover:to-indigo-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-1 transition duration-300 ease-in-out cursor-pointer"
+          >
+            Login
+          </button>
         )}
       </div>
     </nav>

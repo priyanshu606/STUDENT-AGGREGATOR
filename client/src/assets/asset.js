@@ -14,11 +14,13 @@ export const cardData = [
   },
   {
     title: "Scholarships",
+    path: "/explore/scholarship",
     color: "bg-[#7C3AED]",
     backgroundImage: "images.png",
   },
   {
     title: "Tech Events",
+    path:"/explore/tech-events",
     color: "bg-[#FCD9B8]",
     backgroundImage: "imagee.png",
   },
@@ -78,6 +80,7 @@ export const OpportunitiesList = [
   },
   {
     title: 'Tech Event',
+    path:'/explore/tech-events',
     description: 'Learn, connect, and grow at the latest tech gatherings.',
     icon: CalendarCheck,
     bgFrom: 'from-yellow-100',
@@ -88,6 +91,7 @@ export const OpportunitiesList = [
   },
   {
     title: 'Contest',
+    path:'/explore/coding-contest',
     description: 'Compete, win, and be recognized for your skills.',
     icon: Trophy,
     bgFrom: 'from-rose-100',
@@ -492,4 +496,48 @@ export const scholarships = [
     deadline: "2025-09-01T23:59:59Z"
   },
 ];
+
+export const dummyEvents = [
+  {
+    id: 1,
+    title: "AI & Cloud Summit 2025",
+    organizer: "TechWorld Inc.",
+    location: "San Francisco, USA",
+    date: "Sep 12 - Sep 14, 2025",
+    category: "Conference",
+    duration: "3 Days",
+    speakers: "25+",
+    attendees: "500+",
+    ticketPrice: "$299",
+    speakers: [
+  { name: "John Doe", title: "AI Expert", image: "https://placehold.co/100x100" },
+  { name: "Jane Smith", title: "Cloud Architect", image: "https://placehold.co/100x100" }
+],
+    tags: ["AI", "Cloud", "Networking", "Startups"],
+    description:
+      "A premier event bringing together AI enthusiasts, cloud developers, and tech entrepreneurs. Expect keynote talks, workshops, and networking opportunities.",
+    link: "https://example.com/register",
+  },
+  {
+    id: 2,
+    title: "React Dev Meetup",
+    organizer: "Frontend Masters",
+    location: "Online",
+    date: "Oct 5, 2025",
+    category: "Meetup",
+    duration: "1 Day",
+    speakers: "10",
+    attendees: "200+",
+    ticketPrice: "Free",
+    speakers: [
+  { name: "John Doe", title: "AI Expert", image: "https://placehold.co/100x100" },
+  { name: "Jane Smith", title: "Cloud Architect", image: "https://placehold.co/100x100" }
+],
+    tags: ["React", "JavaScript", "Frontend"],
+    description:
+      "A focused meetup for React developers, covering the latest updates, patterns, and performance hacks.",
+    link: "https://example.com/register",
+  },
+];
+
 

@@ -35,7 +35,7 @@ const AddOpportunity = [
     hoverTextGradient: "from-violet-500 to-violet-700",
   },
   {
-    title: "Tech Event",
+    title: "TechEvents",
     icon: CalendarCheck,
     bgFrom: "from-emerald-100",
     bgTo: "to-emerald-200",

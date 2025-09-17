@@ -8,18 +8,16 @@ import NewsLetter from '../components/HomepageComponent/NewsLetter'
 import Footer from '../components/HomepageComponent/Footer'
 import LoginPopup from '../components/HomepageComponent/LoginPopUp'
 import SignUpPopup from '../components/HomepageComponent/SignUpPopup'
-import AdminSignup from '../components/HomepageComponent/AdminSignup'
-import AdminLogin from '../components/HomepageComponent/AdminLogin'
+
 const HomePage = () => {
 
   const [showPopup, setShowPopup] = useState(false);
   const [signUpPopup,setSignUpPopup] = useState(false);
-  const [showAdminLogin,setShowAdminLogin] = useState(false);
   const [showAdminSignup,setShowAdminSignup] = useState(false);
  
   return (
     <div>
-        <NavbarMain onLoginCLose = {()=>setShowPopup(true)} onAdminClose = {()=>{setShowAdminLogin(true)}}/>
+        <NavbarMain onLoginCLose = {()=>setShowPopup(true)}/>
         <HeroMain/>
         <FeaturesSection/>
         {showPopup && <LoginPopup onClose={()=>{setShowPopup(false)}} 
@@ -31,16 +29,6 @@ const HomePage = () => {
           setSignUpPopup(false);
           setShowPopup(true);
         }}/>}
-        {showAdminLogin && <AdminLogin onClose={()=> {setShowAdminLogin(false)}} 
-          openAdminSignUp = {()=>{
-            setShowAdminLogin(false);
-            setShowAdminSignup(true);
-          }}/>}
-       { showAdminSignup && <AdminSignup onClose={()=> {setShowAdminSignup(false)}} 
-          openAdminLogin = {()=>{
-            setShowAdminLogin(true);
-            setShowAdminSignup(false);
-          }}/>}
         <WhoUsingSection/>
         <BlogSection/>
         <NewsLetter/>

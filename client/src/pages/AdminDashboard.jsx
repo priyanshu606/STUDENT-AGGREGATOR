@@ -4,6 +4,8 @@ import Sidebar from '../components/adminDashboard/Sidebar'
 import OpportunityTypeCard from '../components/adminDashboard/OpportunityTypeCard';
 import InternshipForm from '../components/adminDashboard/InternshipForm';
 import HackathonForm from '../components/adminDashboard/HackathonForm';
+import ScholarshipForm from '../components/adminDashboard/ScholarshipForm';
+import TechEventForm from '../components/adminDashboard/TechEvents';
 const AdminDashboard = () => {
       const [selected,setSelected] = useState('Dashboard');
       const [name,setName] = useState(null);
@@ -16,6 +18,8 @@ const AdminDashboard = () => {
     </div>
        {showForm && name==='Internship' && <InternshipForm onClose={()=>{setShowForm(false)}} />}
        {showForm && name==='Hackathon' && <HackathonForm onClose={()=>{setShowForm(false)}} />}
+       {showForm && name==='Scholarship' && <ScholarshipForm onClose={()=>{setShowForm(false)}} />}
+        {showForm && name==='TechEvents' && <TechEventForm onClose={()=>{setShowForm(false)}} />}
     </>
   )
 }

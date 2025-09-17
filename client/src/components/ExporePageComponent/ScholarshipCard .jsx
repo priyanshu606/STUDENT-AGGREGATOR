@@ -35,11 +35,11 @@ const ScholarshipCard = ({ scholarship, onSelect, isSelected }) => {
           </span>
           {/* Eligibility */}
           <span className="flex items-center">
-            🎓 <span className="ml-1">{scholarship.eligibility[0]}</span>
+            🎓 <span className="ml-1">{scholarship.eligibility}</span>
           </span>
         </div>
         <div className="flex flex-wrap gap-2 mt-2">
-          {(Array.isArray(scholarship.eligibility) ? scholarship.eligibility : [scholarship.eligibility]).map(
+          {/* {(Array.isArray(scholarship.eligibility) ? scholarship.eligibility : [scholarship.eligibility]).map(
             (item, index) => (
               <div
                 key={index}
@@ -48,7 +48,7 @@ const ScholarshipCard = ({ scholarship, onSelect, isSelected }) => {
                 {item}
               </div>
             )
-          )}
+          )} */}
         </div>
       </div>
     </div>

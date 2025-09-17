@@ -82,9 +82,10 @@ const ScholarshipDetails = ({ scholarship }) => {
       <div className="mt-6">
         <h2 className="text-xl font-bold text-gray-900 mb-4 border-l-4 border-green-600 pl-3">Eligibility</h2>
         <div className="flex flex-wrap gap-3">
-          {scholarship.eligibility.map((eligible, index) => (
+          scholarship.eligibility
+          {/* {scholarship.eligibility.map((eligible, index) => (
             <span key={index} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">{eligible}</span>
-          ))}
+          ))} */}
         </div>
       </div>
 
