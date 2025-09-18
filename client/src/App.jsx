@@ -26,7 +26,7 @@ function App() {
          <Route path="/explore/tech-events" element={<TechEventPage/>} />
          <Route path="/explore/coding-contest" element={<CodingContestPage/>} />
          <Route path="/blog" element = {<Blog/> }/>
-         <Route path="/blog/details" element = {<BlogDetails/> }/>
+         <Route path="/blog/details/:id" element = {<BlogDetails/> }/>
          <Route path="/blog/create" element = {<CreateBlog/> }/>
          <Route path="/about" element = {<About/> }/>
          <Route path="/admin/profile" element = {<AdminDashboard/> }/>

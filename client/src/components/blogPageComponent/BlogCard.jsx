@@ -7,8 +7,11 @@ import { useNavigate } from "react-router-dom";
 const BlogCard = ({blog}) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate('/blog/details');
+    navigate(`/blog/details/${blog.id}`);
   }
+    const shortDesc = blog.desc.length > 100 
+    ? blog.desc.substring(0, 200) + "..." 
+    : blog.desc;
   return (
     <div onClick={handleClick}
      className="flex justify-center mt-5 cursor-pointer">
@@ -36,7 +39,7 @@ const BlogCard = ({blog}) => {
         {/* Post Content */}
         <div className="mt-3">
           <p className="text-gray-700 text-sm leading-relaxed">
-            {blog.desc}
+            {shortDesc}
           </p>
         </div>
 

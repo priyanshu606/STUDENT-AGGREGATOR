@@ -2,123 +2,162 @@ import { FaRegEye } from "react-icons/fa6";
 import { CiCalendar } from "react-icons/ci";
 import { BiUpvote, BiDownvote } from "react-icons/bi";
 import { FaRegComment, FaComments, FaReply } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import { blogPosts } from "../../assets/asset";
+import { useState } from "react";
 
 const BlogDetails = () => {
+  const [likes, setLikes] = useState(0);
+  const [dislikes, setDislikes] = useState(0);
+  const [comments, setComments] = useState(0);
+  const [text, setText] = useState("");
+  const [commentText, setCommentText] = useState([]);
+  const { id } = useParams();
+
+  const handleClick = () => {
+    if (text.trim() === "") return;
+    setCommentText([...commentText, text]);
+    setText("");
+    setComments(comments + 1);
+  };
+
+  const blog = blogPosts.find((post) => post.id === parseInt(id));
+  if (!blog) return <p className="p-8 text-red-500">Blog not found</p>;
+
   return (
-  
-   
-     
-      <div className="bg-white shadow-lg rounded-none md:rounded-2xl p-8 md:p-12 space-y-8 max-w-none mx-0 mt-18"> {/* Removed max-w-4xl and mx-auto */}
-        
-        <header className="space-y-4">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-600 leading-tight px-4 sm:px-6 lg:px-8"> {/* Added padding here */}
-            Need Career Guidance for 5.5 years of Experience in IT
-          </h1>
-          
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 border-b border-gray-200 pb-6 px-4 sm:px-6 lg:px-8"> {/* Added padding here */}
-            <img
-              src="https://placehold.co/80x80"
-              alt="user avatar"
-              className="w-16 h-16 rounded-full border-2 border-indigo-400"
-            />
-            <div>
-              <p className="font-bold text-gray-600 text-lg">Anonymous User</p>
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-gray-500 text-sm mt-1">
-                <span className="flex items-center gap-1">
-                  <FaRegEye /> 71 views
-                </span>
-                <span className="flex items-center gap-1">
-                  <CiCalendar /> 35 minutes ago
-                </span>
-              </div>
+    <div className="bg-gradient-to-br from-white to-indigo-50 shadow-xl rounded-2xl p-6 sm:p-10 space-y-10 max-w-6xl mx-auto mt-10">
+      {/* Blog Header */}
+      <header className="space-y-4 text-center sm:text-left">
+        <h1 className="text-3xl sm:text-3xl font-bold text-gray-600">
+          {blog.title}
+        </h1>
+
+        <div className="flex flex-col sm:flex-row sm:items-center gap-5 border-b border-gray-200 pb-6">
+          <img
+            src="https://placehold.co/80x80"
+            alt="user avatar"
+            className="w-16 h-16 rounded-full border-4 border-indigo-200 shadow-md"
+          />
+          <div>
+            <p className="font-bold text-gray-700 text-lg">{blog.name}</p>
+            <div className="flex flex-wrap items-center gap-6 text-gray-500 text-sm mt-1">
+              <span className="flex items-center gap-2">
+                <FaRegEye className="text-indigo-500" /> 71 views
+              </span>
+              <span className="flex items-center gap-2">
+                <CiCalendar className="text-indigo-500" /> {blog.time}
+              </span>
             </div>
           </div>
-        </header>
+        </div>
+      </header>
 
-      
-        <article className="prose lg:prose-lg text-gray-700 leading-relaxed px-4 sm:px-6 lg:px-8"> {/* Added padding here */}
-          <p>
-            So, in total I've have around 5.5 years of IT experience, having worked
-            across TCS, Amazon and now in Microsoft as an SDE-2. Also I have masters
-            in CS from a tier-1 university in India. After coming from Amazon to
-            Azure in Microsoft, I see that WLB has gone for a toss (I felt Amazon
-            better) and also in terms of work quality, learning, having structured
-            processes I am feeling let down by Microsoft. Now, I am looking to
-            switch to a company which has Better work quality and learning...
-          </p>
-        </article>
+      {/* Blog Content */}
+      <article className="prose lg:prose-lg text-gray-700 leading-relaxed max-w-none">
+        <p>{blog.desc}</p>
+      </article>
 
-        <div className="flex items-center gap-8 text-gray-600 border-t border-gray-200 pt-6 px-4 sm:px-6 lg:px-8"> {/* Added padding here */}
-          <button className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition">
-            <BiUpvote className="text-2xl text-indigo-500" />
-            <span className="font-semibold">12</span>
-          </button>
-          <button className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition">
-            <BiDownvote className="text-2xl text-red-500" />
-            <span className="font-semibold">2</span>
-          </button>
-          <button className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition">
-            <FaRegComment className="text-xl text-green-600" />
-            <span className="font-semibold">6</span>
-          </button>
+      {/* Actions */}
+      <div className="flex items-center gap-8 text-gray-600 border-t border-gray-200 pt-6 justify-center sm:justify-start">
+        <button
+          onClick={() => setLikes(likes + 1)}
+          className="flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-100 text-indigo-600 hover:bg-indigo-200 transition shadow-sm"
+        >
+          <BiUpvote className="text-2xl" />
+          <span className="font-semibold">{likes}</span>
+        </button>
+        <button
+          onClick={() => setDislikes(dislikes + 1)}
+          className="flex items-center gap-2 px-4 py-2 rounded-full bg-red-100 text-red-600 hover:bg-red-200 transition shadow-sm"
+        >
+          <BiDownvote className="text-2xl" />
+          <span className="font-semibold">{dislikes}</span>
+        </button>
+        <button
+          onClick={() => setComments(comments + 1)}
+          className="flex items-center gap-2 px-4 py-2 rounded-full bg-green-100 text-green-600 hover:bg-green-200 transition shadow-sm"
+        >
+          <FaRegComment className="text-xl" />
+          <span className="font-semibold">{comments}</span>
+        </button>
+      </div>
+
+      {/* Comments Section */}
+      <section className="space-y-6">
+        <div className="flex flex-col sm:flex-row justify-between sm:items-center border-b border-gray-200 pb-4">
+          <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-700">
+            <FaComments className="text-indigo-600" />
+            Comments ({comments})
+          </h2>
+          <select className="border border-gray-300 rounded-lg px-4 py-2 text-sm shadow-sm mt-3 sm:mt-0 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+            <option>Best</option>
+            <option>Most Votes</option>
+            <option>Newest to Oldest</option>
+          </select>
         </div>
 
-        <section>
-        
-          <div className="flex flex-col sm:flex-row justify-between sm:items-center border-t border-gray-200 pt-6 px-4 sm:px-6 lg:px-8"> {/* Added padding here */}
-            <h2 className="flex items-center gap-2 text-xl font-bold text-gray-600">
-              <FaComments className="text-indigo-600" />
-              Comments (1)
-            </h2>
-            <select className="border border-gray-300 rounded-lg px-4 py-2 text-sm shadow-sm mt-4 sm:mt-0 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
-              <option>Best</option>
-              <option>Most Votes</option>
-              <option>Newest to Oldest</option>
-            </select>
-          </div>
+        {/* Add Comment Box */}
+        <div className="bg-white border border-gray-200 rounded-xl shadow-md p-4">
+          <textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="💬 Join the discussion..."
+            className="w-full outline-none rounded-lg p-3 text-[16px] resize-none  "
+            rows={3}
+          ></textarea>
 
-          <div className="mt-6 space-y-4 px-4 sm:px-6 lg:px-8"> 
-            <textarea
-              placeholder="Join the discussion..."
-              className="w-full border border-gray-300 rounded-xl p-4 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500 transition shadow-sm"
-              rows={3}
-            ></textarea>
-            <button className="bg-indigo-600 text-white px-8 py-3 rounded-xl hover:bg-indigo-700 transition font-medium shadow-md">
-              Comment
+          <div className="flex justify-end mt-3">
+            <button
+              onClick={handleClick}
+              className="bg-indigo-600 text-white px-6 py-2 rounded-lg 
+                       hover:bg-indigo-700 transition font-medium shadow-md"
+            >
+              Post Comment
             </button>
           </div>
+        </div>
 
-          <div className="mt-8 px-4 sm:px-6 lg:px-8">
-            <div className="flex gap-4 p-5 rounded-xl bg-gray-50 shadow-sm">
-              <img
-                src="https://placehold.co/40x40"
-                alt="commenter avatar"
-                className="w-10 h-10 rounded-full border-2 border-gray-300"
-              />
-              <div className="flex-1">
-                <div className="flex justify-between items-center">
-                  <p className="font-bold text-gray-800">Avik</p>
-                  <p className="text-xs text-gray-500">An hour ago</p>
-                </div>
-                <p className="text-gray-700 mt-2">
-                  You should ask these in developers india subreddit.
-                </p>
-                <div className="flex items-center gap-5 mt-4 text-sm text-gray-500">
-                  <button className="flex items-center gap-1 hover:text-indigo-600 transition">
-                    <BiUpvote /> 12
-                  </button>
-                  <button className="flex items-center gap-1 hover:text-red-600 transition">
-                    <BiDownvote /> 2
-                  </button>
-                  <button className="flex items-center gap-1 hover:text-green-600 transition">
-                    <FaReply /> Reply
-                  </button>
+        {/* Show Comments */}
+        {commentText.length === 0 ? (
+          <p className="text-gray-500 text-center mt-4">
+            No comments yet. Be the first to comment! 🚀
+          </p>
+        ) : (
+          <div className="space-y-6">
+            {commentText.map((comment, index) => (
+              <div
+                key={index}
+                className="flex gap-4 p-5 rounded-xl bg-gray-50 shadow-md hover:shadow-lg transition"
+              >
+                <img
+                  src="https://placehold.co/40x40"
+                  alt="commenter avatar"
+                  className="w-10 h-10 rounded-full border-2 border-gray-300"
+                />
+                <div className="flex-1">
+                  <div className="flex justify-between items-center">
+                    <p className="font-bold text-gray-800">{blog.name}</p>
+                    <p className="text-xs text-gray-500">a minute ago</p>
+                  </div>
+                  <p className="text-gray-700 mt-2">{comment}</p>
+                  <div className="flex items-center gap-5 mt-4 text-sm text-gray-500">
+                    <button className="flex items-center gap-1 hover:text-indigo-600 transition">
+                      <BiUpvote /> 12
+                    </button>
+                    <button className="flex items-center gap-1 hover:text-red-600 transition">
+                      <BiDownvote /> 2
+                    </button>
+                    <button className="flex items-center gap-1 hover:text-green-600 transition">
+                      <FaReply /> Reply
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
-        </section>
-      </div>
+        )}
+      </section>
+    </div>
   );
 };
 
