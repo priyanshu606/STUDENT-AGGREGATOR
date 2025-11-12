@@ -19,7 +19,13 @@ const signUpSchema = new mongoose.Schema({
         type: String, 
         enum: ["student", "admin"],
         default: "student" 
-    }
+    },
+    branch: String,
+    college: String,
+    city: String,
+    avatar: String,
+    bio: String,
+    skills: [String]
 })
 
 signUpSchema.pre('save',async function (next) {

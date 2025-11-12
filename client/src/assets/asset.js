@@ -593,4 +593,245 @@ export const blogPosts = [
   },
 ];
 
+// Dummy scholarship data
+const dummyScholarships = [
+  {
+    id: 1,
+    title: "Global Excellence Scholarship",
+    provider: "International Education Fund",
+    eligibility: "Undergraduate students with GPA above 3.5",
+    amount: "$5,000 - $20,000",
+    duration: "1 year",
+    deadline: "2025-12-31",
+    description:
+      "The Global Excellence Scholarship is designed to support outstanding students pursuing higher education abroad. It covers tuition, living expenses, and travel costs.",
+    benefits: [
+      "Full tuition coverage",
+      "Monthly living stipend",
+      "Travel allowance",
+      "Mentorship programs",
+    ],
+    applicationProcess:
+      "Fill out the online application form, submit required documents, and attend an interview.",
+    documentsRequired: [
+      "Academic transcripts",
+      "Letter of recommendation",
+      "Personal statement",
+      "Proof of English proficiency",
+    ],
+    applicationLink: "https://example.com/apply",
+  },
+  {
+    id: 2,
+    title: "Women in STEM Scholarship",
+    provider: "Tech Innovators Foundation",
+    eligibility: "Female students pursuing STEM degrees",
+    amount: "$3,000 - $10,000",
+    duration: "6 months",
+    deadline: "2025-11-30",
+    description:
+      "This scholarship empowers women in science, technology, engineering, and mathematics by providing financial aid and mentorship opportunities.",
+    benefits: [
+      "Financial support for tuition",
+      "Access to STEM workshops",
+      "Networking with industry leaders",
+    ],
+    applicationProcess:
+      "Submit online form, academic transcripts, and personal essay. Shortlisted candidates will have an online interview.",
+    documentsRequired: [
+      "Academic transcripts",
+      "Personal statement",
+      "Resume/CV",
+      "Letter of recommendation",
+    ],
+    applicationLink: "https://example.com/women-in-stem",
+  },
+  {
+    id: 3,
+    title: "Community Leadership Scholarship",
+    provider: "Global Leaders Foundation",
+    eligibility: "Students involved in community service or leadership roles",
+    amount: "$2,000 - $8,000",
+    duration: "1 year",
+    deadline: "2025-10-31",
+    description:
+      "Recognizes students who show exceptional leadership in their communities. Encourages social impact and civic responsibility.",
+    benefits: ["Financial aid", "Leadership workshops", "Mentorship programs"],
+    applicationProcess:
+      "Submit leadership portfolio, letters of recommendation, and personal essay.",
+    documentsRequired: ["Portfolio", "Letters of recommendation", "Essay"],
+    applicationLink: "https://example.com/community-leadership",
+  },
+];
+
+export const eventDataList = [
+  {
+    id: 1,
+    title: "AI & Machine Learning Summit 2025",
+    organizer: "Google Developers Group",
+    date: "March 12–14, 2025",
+    location: "Bangalore, India",
+    type: "Conference",
+    mode: "Offline",
+    registrationFee: "₹500",
+    banner: "https://images.unsplash.com/photo-1551836022-d5d88e9218df",
+    description:
+      "Join industry leaders and innovators at the AI & ML Summit 2025. This event focuses on the latest advancements in artificial intelligence, deep learning, and data science applications across industries.",
+    topics: ["Deep Learning", "AI Ethics", "Generative AI", "Neural Networks"],
+    speakers: [
+      {
+        name: "Dr. Sundar Raman",
+        designation: "AI Research Lead, Google",
+        image: "https://randomuser.me/api/portraits/men/75.jpg",
+      },
+      {
+        name: "Megha Singh",
+        designation: "Data Scientist, Microsoft",
+        image: "https://randomuser.me/api/portraits/women/65.jpg",
+      },
+      {
+        name: "Rohit Sharma",
+        designation: "ML Engineer, Amazon",
+        image: "https://randomuser.me/api/portraits/men/45.jpg",
+      },
+    ],
+    website: "https://developers.google.com/events",
+  },
+  {
+    id: 2,
+    title: "Blockchain Innovation Conference 2025",
+    organizer: "Ethereum Foundation",
+    date: "April 8–10, 2025",
+    location: "Pune, India",
+    type: "Summit",
+    mode: "Hybrid",
+    registrationFee: "₹800",
+    banner: "https://images.unsplash.com/photo-1621961459612-0c7c0c15f4c1",
+    description:
+      "Explore the latest in blockchain, DeFi, NFTs, and Web3 technologies. Network with industry experts and learn how decentralized systems are reshaping the digital economy.",
+    topics: ["Blockchain", "Web3", "NFTs", "DeFi"],
+    speakers: [
+      {
+        name: "Ankit Mehra",
+        designation: "Blockchain Architect, Polygon",
+        image: "https://randomuser.me/api/portraits/men/32.jpg",
+      },
+      {
+        name: "Priya Bansal",
+        designation: "Smart Contract Developer, ConsenSys",
+        image: "https://randomuser.me/api/portraits/women/40.jpg",
+      },
+    ],
+    website: "https://ethereum.org/en/events/",
+  },
+  {
+    id: 3,
+    title: "Cybersecurity Expo 2025",
+    organizer: "NASSCOM & Cisco",
+    date: "May 20–22, 2025",
+    location: "New Delhi, India",
+    type: "Expo",
+    mode: "Offline",
+    registrationFee: "Free",
+    banner: "https://images.unsplash.com/photo-1591696205602-2f950c417cb9",
+    description:
+      "A premier event showcasing cutting-edge cybersecurity tools and strategies to protect digital infrastructure. Includes live demos and workshops by industry experts.",
+    topics: ["Network Security", "Cloud Protection", "Ethical Hacking"],
+    speakers: [
+      {
+        name: "Neha Kapoor",
+        designation: "Cybersecurity Analyst, Cisco",
+        image: "https://randomuser.me/api/portraits/women/60.jpg",
+      },
+      {
+        name: "Rajiv Anand",
+        designation: "Security Researcher, IBM",
+        image: "https://randomuser.me/api/portraits/men/90.jpg",
+      },
+    ],
+    website: "https://nasscom.in/events",
+  },
+  {
+    id: 4,
+    title: "Tech Startup Conclave 2025",
+    organizer: "Startup India",
+    date: "June 15–17, 2025",
+    location: "Mumbai, India",
+    type: "Conference",
+    mode: "Offline",
+    registrationFee: "₹1,000",
+    banner: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
+    description:
+      "An exciting platform for entrepreneurs and investors to connect, collaborate, and create the next big tech innovations. Includes pitch competitions and networking sessions.",
+    topics: ["Startups", "Funding", "Product Design", "Innovation"],
+    speakers: [
+      {
+        name: "Vivek Raj",
+        designation: "Venture Capitalist, Sequoia India",
+        image: "https://randomuser.me/api/portraits/men/22.jpg",
+      },
+      {
+        name: "Ananya Deshmukh",
+        designation: "Founder, InnovateX",
+        image: "https://randomuser.me/api/portraits/women/28.jpg",
+      },
+    ],
+    website: "https://www.startupindia.gov.in",
+  },
+  {
+    id: 5,
+    title: "Cloud Computing World Forum 2025",
+    organizer: "Amazon Web Services (AWS)",
+    date: "July 10–12, 2025",
+    location: "Hyderabad, India",
+    type: "Summit",
+    mode: "Hybrid",
+    registrationFee: "₹700",
+    banner: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+    description:
+      "Dive deep into cloud technologies, serverless computing, and scalable infrastructures. Learn best practices from AWS and cloud leaders.",
+    topics: ["AWS", "Serverless", "Cloud Security", "Kubernetes"],
+    speakers: [
+      {
+        name: "Dr. Aakash Jain",
+        designation: "Cloud Solutions Architect, AWS",
+        image: "https://randomuser.me/api/portraits/men/58.jpg",
+      },
+      {
+        name: "Ritika Malhotra",
+        designation: "DevOps Engineer, Google Cloud",
+        image: "https://randomuser.me/api/portraits/women/47.jpg",
+      },
+    ],
+    website: "https://aws.amazon.com/events/",
+  },
+  {
+    id: 6,
+    title: "Data Science & Analytics Forum 2025",
+    organizer: "IIT Delhi & TCS",
+    date: "August 2–4, 2025",
+    location: "Delhi, India",
+    type: "Workshop",
+    mode: "Offline",
+    registrationFee: "₹600",
+    banner: "https://images.unsplash.com/photo-1532619675605-1ede6d19e7a6",
+    description:
+      "A hands-on workshop for aspiring data scientists covering predictive modeling, visualization, and machine learning deployment.",
+    topics: ["Python", "Data Visualization", "ML Deployment"],
+    speakers: [
+      {
+        name: "Kunal Verma",
+        designation: "Lead Data Scientist, TCS",
+        image: "https://randomuser.me/api/portraits/men/38.jpg",
+      },
+      {
+        name: "Sonia Reddy",
+        designation: "Assistant Professor, IIT Delhi",
+        image: "https://randomuser.me/api/portraits/women/24.jpg",
+      },
+    ],
+    website: "https://iitd.ac.in/events",
+  },
+];
+
 

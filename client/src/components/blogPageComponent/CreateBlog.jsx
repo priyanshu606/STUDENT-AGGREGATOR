@@ -1,24 +1,46 @@
-import { useState } from "react";
+import axios from "axios";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateBlog = () => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [tags, setTags] = useState("");
-  const [image, setImage] = useState(null);
+  const navigate = useNavigate();
+  const [blogData, setBlogData] = useState({
+    title: "",
+    content: "",
+    tags: "",  
+  });
 
-  const handleSubmit = (e) => {
+  const token = localStorage.getItem("token");
+  const handleChange = (e) => {
+    const newBlogData = {
+      ...blogData,
+      [e.target.name]: e.target.value,
+    };
+    setBlogData(newBlogData);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
-      title,
-      content,
-      tags: tags.split(",").map((t) => t.trim()),
-      image,
-    });
-    
+    try {
+  
+      const response = await axios.post(
+        `http://localhost:3005/api/add/blog`,
+        blogData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("blog submitted", response);
+      navigate("/blog");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <div className="w-full min-h-screen  py-10 px-4 mt-15">
+    <div className="w-full min-h-screen py-10 px-4 mt-15">
       <div className="bg-white shadow-2xl rounded-none md:rounded-2xl p-8 md:p-12 max-w-4xl mx-auto space-y-8">
         {/* Header */}
         <header>
@@ -39,11 +61,11 @@ const CreateBlog = () => {
             </label>
             <input
               type="text"
+              name="title"
               placeholder="Enter your blog title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              value={blogData.title}
+              onChange={handleChange}
               className="w-full border border-gray-300 rounded-xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition shadow-sm"
-              required
             />
           </div>
 
@@ -55,38 +77,27 @@ const CreateBlog = () => {
             <textarea
               placeholder="Write your blog content..."
               rows={8}
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+              name="content"
+              value={blogData.content}
+              onChange={handleChange}
               className="w-full border border-gray-300 rounded-xl p-4 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500 transition shadow-sm"
-              required
             ></textarea>
           </div>
 
           {/* Tags */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">
-              Tags (comma separated)
+             Related Blogs
             </label>
             <input
               type="text"
-              placeholder="e.g. Career, IT, Cloud"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
+              name="tags"
+              placeholder="e.g. internship, hackathon, tech-events"
+              value={blogData.tags}
+              onChange={handleChange}
               className="w-full border border-gray-300 rounded-xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition shadow-sm"
             />
-          </div>
-
-          {/* Image Upload */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">
-              Upload Thumbnail (optional)
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setImage(e.target.files[0])}
-              className="w-full border border-gray-300 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition shadow-sm bg-gray-50"
-            />
+           
           </div>
 
           {/* Submit */}

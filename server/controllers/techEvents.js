@@ -1,22 +1,34 @@
-const TechEvents = require('../models/techEvents')
+const TechEvent = require("../models/techEvents");
 
-async function handleCreateTechEvents(req,res) {
-    try {
-        const events = req.body;
-        const newEvents = await TechEvents.create(events);
-        res.status(201).json({msg:"created successfully",techEvents:newEvents});
-    } catch (error) {
-        res.status(400).json({error: 'Failed to create Scholarship', details: error.message});
-    }
-}
 
-async function handleAllTechEvents(req,res) {
-    try {
-        const events = await TechEvents.find().sort({createdAt:-1});
-        res.status(200).json(events);
-    } catch (error) {
-        res.status(500).json({ error: 'Server Error' });
-    }
-}
+exports.createTechEvent = async (req, res) => {
+  try {
+    const event = new TechEvent(req.body);
+    const savedEvent = await event.save();
+    res.status(201).json(savedEvent);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to create event" });
+  }
+};
 
-module.exports = {handleCreateTechEvents,handleAllTechEvents}
+
+exports.getAllTechEvents = async (req, res) => {
+  try {
+    const events = await TechEvent.find();
+    res.json(events);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch events" });
+  }
+};
+
+
+exports.getTechEventById = async (req, res) => {
+  try {
+    const event = await TechEvent.findById(req.params.id);
+    if (!event) return res.status(404).json({ error: "Event not found" });
+    res.json(event);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch event" });
+  }
+};

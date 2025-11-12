@@ -1,27 +1,84 @@
 import { FaRegEye } from "react-icons/fa6";
 import { CiCalendar } from "react-icons/ci";
 import { BiUpvote, BiDownvote } from "react-icons/bi";
-import { FaRegComment, FaComments, FaReply } from "react-icons/fa";
+import { FaRegComment, FaComments } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import { blogPosts } from "../../assets/asset";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import BlogComment from "./BlogComment";
+import BlogComments from "./BlogComments";
+import { useContext } from "react";
+import { BlogsContext } from "../../context/BlogContext";
 
 const BlogDetails = () => {
   const [likes, setLikes] = useState(0);
+  const [likedByUser, setLikedByUser] = useState(false);
   const [dislikes, setDislikes] = useState(0);
-  const [comments, setComments] = useState(0);
-  const [text, setText] = useState("");
-  const [commentText, setCommentText] = useState([]);
+  const [dislikedByUser, setDislikedByUser] = useState(false);
+  const [views, setViews] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [blog, setBlog] = useState(null);
   const { id } = useParams();
+  const {comments} = useContext(BlogsContext);
+  const userId = localStorage.getItem("userId");
+  clg("userId in blog details:", userId);
+  const token = localStorage.getItem("token");
 
-  const handleClick = () => {
-    if (text.trim() === "") return;
-    setCommentText([...commentText, text]);
-    setText("");
-    setComments(comments + 1);
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3005/api/blog/${id}`);
+        setBlog(res.data);
+        console.log(res.data)
+        // Initialize likes and likedByUser
+      setLikes(res.data.likes?.length || 0);
+      setDislikes(res.data.dislikes?.length || 0);
+      setViews(res.data.views || 0);
+      setLikedByUser(res.data.likes?.includes(userId));
+      setDislikedByUser(res.data.dislikes?.includes(userId));
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBlog();
+  }, [id, userId]);
+
+  const handleLike = async () => {
+    try {
+      const res = await axios.put(
+        `http://localhost:3005/api/blog/${id}/like`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setLikes(res.data.likesCount);
+      setDislikes(res.data.dislikesCount);
+      setLikedByUser(res.data.likedByUser);
+      setDislikedByUser(res.data.dislikedByUser);
+    } catch (error) {
+      console.error("Error liking blog:", error);
+    }
   };
+  const handleDislike = async () => {
+  try {
+    const res = await axios.put(
+      `http://localhost:3005/api/blog/${id}/dislike`,
+      {},
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
 
-  const blog = blogPosts.find((post) => post.id === parseInt(id));
+    setDislikes(res.data.dislikesCount);
+    setLikes(res.data.likesCount);
+    setLikedByUser(res.data.likedByUser);
+    setDislikedByUser(res.data.dislikedByUser);
+  } catch (error) {
+    console.error("Error disliking blog:", error);
+  }
+};
+
+  if (loading) return <p className="p-8">Loading...</p>;
   if (!blog) return <p className="p-8 text-red-500">Blog not found</p>;
 
   return (
@@ -39,10 +96,12 @@ const BlogDetails = () => {
             className="w-16 h-16 rounded-full border-4 border-indigo-200 shadow-md"
           />
           <div>
-            <p className="font-bold text-gray-700 text-lg">{blog.name}</p>
+            <p className="font-bold text-gray-700 text-lg">
+              {blog.createdBy?.fullName}
+            </p>
             <div className="flex flex-wrap items-center gap-6 text-gray-500 text-sm mt-1">
               <span className="flex items-center gap-2">
-                <FaRegEye className="text-indigo-500" /> 71 views
+                <FaRegEye className="text-indigo-500" />{views}
               </span>
               <span className="flex items-center gap-2">
                 <CiCalendar className="text-indigo-500" /> {blog.time}
@@ -54,31 +113,37 @@ const BlogDetails = () => {
 
       {/* Blog Content */}
       <article className="prose lg:prose-lg text-gray-700 leading-relaxed max-w-none">
-        <p>{blog.desc}</p>
+        <p>{blog.content}</p>
       </article>
 
       {/* Actions */}
       <div className="flex items-center gap-8 text-gray-600 border-t border-gray-200 pt-6 justify-center sm:justify-start">
+        {/* Like button */}
         <button
-          onClick={() => setLikes(likes + 1)}
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-100 text-indigo-600 hover:bg-indigo-200 transition shadow-sm"
+          onClick={handleLike}
+          className={`flex items-center gap-2 px-4 py-2 rounded-full ${
+            likedByUser
+              ? "bg-red-100 text-red-600"
+              : "bg-indigo-100 text-indigo-600"
+          } hover:bg-indigo-200 transition shadow-sm`}
         >
           <BiUpvote className="text-2xl" />
           <span className="font-semibold">{likes}</span>
         </button>
+
+        {/* Dislike button (optional) */}
         <button
-          onClick={() => setDislikes(dislikes + 1)}
+          onClick={handleDislike}
           className="flex items-center gap-2 px-4 py-2 rounded-full bg-red-100 text-red-600 hover:bg-red-200 transition shadow-sm"
         >
           <BiDownvote className="text-2xl" />
           <span className="font-semibold">{dislikes}</span>
         </button>
-        <button
-          onClick={() => setComments(comments + 1)}
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-green-100 text-green-600 hover:bg-green-200 transition shadow-sm"
-        >
+
+        {/* Comments count */}
+        <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-green-100 text-green-600 hover:bg-green-200 transition shadow-sm">
           <FaRegComment className="text-xl" />
-          <span className="font-semibold">{comments}</span>
+          <span className="font-semibold">{comments.length}</span>
         </button>
       </div>
 
@@ -87,7 +152,7 @@ const BlogDetails = () => {
         <div className="flex flex-col sm:flex-row justify-between sm:items-center border-b border-gray-200 pb-4">
           <h2 className="flex items-center gap-2 text-2xl font-bold text-gray-700">
             <FaComments className="text-indigo-600" />
-            Comments ({comments})
+            Comments ({comments.length})
           </h2>
           <select className="border border-gray-300 rounded-lg px-4 py-2 text-sm shadow-sm mt-3 sm:mt-0 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
             <option>Best</option>
@@ -97,65 +162,10 @@ const BlogDetails = () => {
         </div>
 
         {/* Add Comment Box */}
-        <div className="bg-white border border-gray-200 rounded-xl shadow-md p-4">
-          <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="💬 Join the discussion..."
-            className="w-full outline-none rounded-lg p-3 text-[16px] resize-none  "
-            rows={3}
-          ></textarea>
-
-          <div className="flex justify-end mt-3">
-            <button
-              onClick={handleClick}
-              className="bg-indigo-600 text-white px-6 py-2 rounded-lg 
-                       hover:bg-indigo-700 transition font-medium shadow-md"
-            >
-              Post Comment
-            </button>
-          </div>
-        </div>
+        <BlogComment blog={blog} />
 
         {/* Show Comments */}
-        {commentText.length === 0 ? (
-          <p className="text-gray-500 text-center mt-4">
-            No comments yet. Be the first to comment! 🚀
-          </p>
-        ) : (
-          <div className="space-y-6">
-            {commentText.map((comment, index) => (
-              <div
-                key={index}
-                className="flex gap-4 p-5 rounded-xl bg-gray-50 shadow-md hover:shadow-lg transition"
-              >
-                <img
-                  src="https://placehold.co/40x40"
-                  alt="commenter avatar"
-                  className="w-10 h-10 rounded-full border-2 border-gray-300"
-                />
-                <div className="flex-1">
-                  <div className="flex justify-between items-center">
-                    <p className="font-bold text-gray-800">{blog.name}</p>
-                    <p className="text-xs text-gray-500">a minute ago</p>
-                  </div>
-                  <p className="text-gray-700 mt-2">{comment}</p>
-                  <div className="flex items-center gap-5 mt-4 text-sm text-gray-500">
-                    <button className="flex items-center gap-1 hover:text-indigo-600 transition">
-                      <BiUpvote /> 12
-                    </button>
-                    <button className="flex items-center gap-1 hover:text-red-600 transition">
-                      <BiDownvote /> 2
-                    </button>
-                    <button className="flex items-center gap-1 hover:text-green-600 transition">
-                      <FaReply /> Reply
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        <BlogComments blogId={blog._id} />
       </section>
     </div>
   );

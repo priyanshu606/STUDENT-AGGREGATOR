@@ -8,8 +8,9 @@ function authMiddleware(req, res, next) {
   }
 
   const token = authHeader.split(' ')[1];
+  console.log("Token:", token);
   const user = verifyToken(token);
-
+  console.log("Verified User:", user);
   if (!user) {
     return res.status(401).json({ msg: "Unauthorized: Invalid token" });
   }

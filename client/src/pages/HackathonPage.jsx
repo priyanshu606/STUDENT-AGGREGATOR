@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import HackathonCard from '../components//ExporePageComponent/HackathonCard'
 import HackathonDetails from '../components//ExporePageComponent/HackathonDetails'
-import FilterInternship from '../components/ExporePageComponent/FilterInternship';
 import axios from 'axios';
+import FilterHackathon from '../components/ExporePageComponent/FilterHackathon';
 
 const HackothonPage = () => {
     const [selectedHackathons, setSelectedHackathons] = useState(null);
@@ -17,9 +17,9 @@ const HackothonPage = () => {
     },[])
   return (
      <div className="flex flex-col mt-15">
-    <FilterInternship/>
+    <FilterHackathon setHackathons={setHackathon} />
     <div className="flex h-screen mt-1">
-      {/* Left: List */}
+      {/* Left: List */}  
       <div className="w-1/3 border-r p-4 overflow-y-auto">
         {hackathon.map((hackathon) => (
             <HackathonCard

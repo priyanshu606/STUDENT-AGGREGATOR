@@ -1,7 +1,14 @@
+import { useNavigate } from "react-router-dom";
+
 const InternshipDetails = ({ internship }) => {
   const daysLeft = 13;
   if (!internship) {
     return <div className="text-gray-500 text-center mt-10">Select an internship to see details.</div>;
+  }
+  
+  const navigate = useNavigate();
+  const handleQuickApply = ()=>{
+    navigate(`/explore/internships/apply/${internship._id}`);
   }
 
   return (
@@ -50,7 +57,7 @@ const InternshipDetails = ({ internship }) => {
           </button>
         </div>
         <button
-        onClick={() => window.open(internship.applicationLink, "_blank")}
+        onClick={handleQuickApply}
         className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-200 cursor-pointer">
           Quick Apply
         </button>
@@ -112,8 +119,8 @@ const InternshipDetails = ({ internship }) => {
       <div className="mt-6">
         <h2 className="text-xl font-bold text-gray-900 mb-4 border-l-4 border-blue-600 pl-3">Eligibility</h2>
         <div className="flex flex-wrap gap-3">
-          {internship.eligibility.map((eligible)=>(
-              <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">{eligible}</span>
+          {internship.eligibility.map((eligible,index)=>(
+              <span key={index} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">{eligible}</span>
           ))}
         </div>
       </div>

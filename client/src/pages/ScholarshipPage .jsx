@@ -1,54 +1,46 @@
-import { useEffect, useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ScholarshipCard from "../components/ExporePageComponent/ScholarshipCard ";
-import ScholarshipDetails from "../components/ExporePageComponent/ScholarshipDetails ";
-
+import ScholarshipDetails from "../components/ExporePageComponent/ScholarshipDetails "
+import FilterScholarship from "../components/ExporePageComponent/FilterScholarship";
 const ScholarshipPage = () => {
-  const [selectedScholarship, setSelectedScholarship] = useState(null);
   const [scholarships, setScholarships] = useState([]);
-  const [load, setLoad] = useState(true);
+  const [selectedScholarship, setSelectedScholarship] = useState(null);
+
+
   useEffect(() => {
-    setLoad(true);
-    const fetchData = async () => {
+    const fetchScholarships = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3005/api/all/scholarship"
-        );
-        console.log(response.data);
-        setScholarships(response.data);
-      } catch (error) {
-        console.error("Error fetching internships:", error);
-      } finally {
-        setLoad(false);
+        const res = await axios.get("http://localhost:3005/api/all/scholarship");
+        setScholarships(res.data);     
+        if (res.data.length > 0) setSelectedScholarship(res.data[0]);
+      } catch (err) {
+        console.error("Error fetching scholarships:", err);
       }
     };
 
-    fetchData();
+    fetchScholarships();
   }, []);
 
   return (
-    <div className="flex flex-col mt-15">
-      <div className="flex h-screen mt-1">
+    <div className="flex flex-col mt-12">
+      <FilterScholarship setScholarships = {setScholarships}/>
+      <div className="flex h-screen">
+        
+        {/* Left Column: Scholarship List */}
         <div className="w-1/3 border-r p-4 overflow-y-auto">
-          {load ? (
-            <p>Loading...</p>
-          ) : scholarships.length === 0 ? (
-            <p className="text-gray-500">No internships found.</p>
-          ) : (
-            scholarships.map((scholarship) => (
-              <ScholarshipCard
-                key={scholarship._id}
-                scholarship={scholarship}
-                isSelected={selectedScholarship?._id === scholarship._id}
-                onSelect={setSelectedScholarship}
-              />
-            ))
-          )}
+          {scholarships.map((scholarship) => (
+            <ScholarshipCard
+              key={scholarship._id}
+              scholarship={scholarship}
+              onSelect={setSelectedScholarship}
+              isSelected={selectedScholarship?._id === scholarship._id}
+            />
+          ))}
         </div>
 
-        {/* Right: Details of selected scholarship */}
-        <div className="w-2/3 overflow-y-auto">
+        {/* Right Column: Scholarship Details */}
+        <div className="w-2/3 overflow-y-auto p-4">
           <ScholarshipDetails scholarship={selectedScholarship} />
         </div>
       </div>

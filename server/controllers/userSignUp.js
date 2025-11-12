@@ -45,6 +45,11 @@ async function handleLoginUser(req,res) {
     const isMatch = await bcrypt.compare(password,user.password);
     if(!isMatch) return res.status(401).json({msg:"wrong password"});
     const token = createToken(user);
+    res.cookie("token", token, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+  });
     res.json(
     {msg:"login successful",
     token,
@@ -56,9 +61,25 @@ async function handleLoginUser(req,res) {
     }
 })}
 
+async function updateStudentProfile (req,res){
+    try {
+    const studentId = req.params.id;
+    console.log(req.params.id);
+    const updates = req.body;
+    const updatedStudent = await SignUpUser.findByIdAndUpdate(studentId, updates, {
+      new: true,
+    });
+
+    res.json(updatedStudent);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
 
 
 module.exports = {
     handleAllSignUpUser,
-    handleLoginUser
+    handleLoginUser,
+    updateStudentProfile
 };

@@ -11,24 +11,24 @@ const InternshipPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAll = async () => {
       try {
-        setLoading(true); 
-        const response = await axios.get("http://localhost:3005/api/all/internship");
-        setInternships(response.data);
+        setLoading(true);
+        const res = await axios.get("http://localhost:3005/api/all/internship");
+        setInternships(res.data);
       } catch (err) {
         console.error("Error fetching internships:", err);
         setError("Failed to load internships. Please try again later.");
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
-    fetchData();
+    fetchAll();
   }, []);
 
   return (
-    <div className="flex flex-col mt-15">
-      <FilterInternship />
+    <div className="flex flex-col mt-14">
+      <FilterInternship setInternships={setInternships} />
       <div className="flex h-screen mt-1">
         {/* Left: List */}
         <div className="w-1/3 border-r p-4 overflow-y-auto">

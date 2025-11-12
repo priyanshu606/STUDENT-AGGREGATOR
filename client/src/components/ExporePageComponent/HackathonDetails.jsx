@@ -1,6 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const HackathonDetails = ({ hackathon }) => {
+  const navigate = useNavigate();
+  const handleQuickApply = () => {
+    navigate(`/explore/hackathon/apply/${hackathon._id}`);
+  }
   if (!hackathon) {
     return (
       <div className="text-gray-500 text-center mt-10">
@@ -74,14 +79,14 @@ const HackathonDetails = ({ hackathon }) => {
 
       {/* Quick Apply */}
       <div className="text-center mt-8">
-        <a
-          href={hackathon.link}
+        <button
+          onClick={handleQuickApply}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition"
         >
           Apply Now
-        </a>
+        </button>
       </div>
     </div>
   );

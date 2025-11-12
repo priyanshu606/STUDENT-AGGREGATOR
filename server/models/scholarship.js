@@ -1,18 +1,17 @@
-    const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-    const scholarshipSchema =  mongoose.Schema({
-        name: { type: String, required: true },
-        provider: { type: String, required: true },
-        amount: { type: Number },               
-        date: { type: Date, default: Date.now },
-        applicationLink: { type: String },     
-        eligibility: { type: String },         
-        description: { type: String },         
-        method: { type: String },               
-        views: { type: Number, default: 0 },    
-        applicants: { type: Number, default: 0 }, 
-        deadline: { type: Date }                
-    }, { timestamps: true });
+const scholarshipSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  provider: { type: String, required: true },
+  eligibility: { type: String, required: true },
+  amount: { type: String, required: true },
+  duration: { type: String, required: true },
+  deadline: { type: String, required: true },
+  description: { type: String, required: true },
+  benefits: { type: [String], default: [] },
+  applicationProcess: { type: String, required: true },
+  documentsRequired: { type: [String], default: [] },
+  applicationLink: { type: String, required: true },
+});
 
-    const Scholarship = mongoose.model('Scholarship', scholarshipSchema);
-    module.exports = Scholarship;
+module.exports = mongoose.model("Scholarship", scholarshipSchema);
